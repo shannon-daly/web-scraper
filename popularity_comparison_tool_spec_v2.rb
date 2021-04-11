@@ -1,23 +1,29 @@
 #!/usr/bin/env ruby
 
+require 'open-uri'
 require 'rubygems'
 require 'nokogiri'
-require 'open-uri'
+require 'httparty'
 
-def get_page
-		url= 'https://www.google.com/search?q=panadol+safety'
-		@doc = Nokogiri::HTML(url)
-		puts @doc.inspect
+def get_page(product, attribute)
+		url = "https://www.google.com/search?q=#{product}+#{attribute}"
+		page = HTTParty.get(url)
+		@doc = Nokogiri::HTML(page)
+		results = @doc.at_css('#result-stats').text
+		puts "#{product} #{attribute}: #{results}"
 end	
-
-
-#README: run file using `ruby web_scraper_script.rb`
 
 products = ['panadol', 'nurofen']
 attributes = ['safety', 'efficacy']
 
+products.each do |product|
+	puts product
+	attributes.each do |attribute| 
+		get_page(product, attribute)
+	end
+end
 
-get_page
+#README: run file using `ruby web_scraper_script.rb`
 
 #
 # write code here to fetch each combination of a product and an attribute from Google
@@ -27,10 +33,6 @@ get_page
 # * We get the number of results from the page (XX from where it says 'About XX results (YY seconds)')
 # * Repeat for each combination
 #
-
-products.each do |product|
-	puts product
-end
 
 
 # output to STDOUT should look something like:

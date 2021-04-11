@@ -2,11 +2,22 @@
 
 require 'rubygems'
 require 'nokogiri'
+require 'open-uri'
+
+def get_page
+		url= 'https://www.google.com/search?q=panadol+safety'
+		@doc = Nokogiri::HTML(url)
+		puts @doc.inspect
+end	
+
 
 #README: run file using `ruby web_scraper_script.rb`
 
 products = ['panadol', 'nurofen']
 attributes = ['safety', 'efficacy']
+
+
+get_page
 
 #
 # write code here to fetch each combination of a product and an attribute from Google
@@ -20,7 +31,6 @@ attributes = ['safety', 'efficacy']
 products.each do |product|
 	puts product
 end
-
 
 
 # output to STDOUT should look something like:

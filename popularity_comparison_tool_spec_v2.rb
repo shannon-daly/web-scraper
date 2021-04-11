@@ -17,7 +17,6 @@ products = ['panadol', 'nurofen']
 attributes = ['safety', 'efficacy']
 
 products.each do |product|
-	puts product
 	attributes.each do |attribute| 
 		get_page(product, attribute)
 	end
